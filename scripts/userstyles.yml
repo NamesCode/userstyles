@@ -102,6 +102,9 @@ collaborators:
   - &rooot
     name: rooot
     url: https://github.com/RoootTheFox
+  - &name
+    name: Name
+    url: https://github.com/namescode
 
 userstyles:
   advent-of-code:
@@ -246,6 +249,13 @@ userstyles:
       app-link: "https://github.com"
       current-maintainers: []
       past-maintainers: [*andreasgrafen, *pocco81, *glowingumbreon]
+  gitlab:
+    name: Gitlab
+    category: productivity
+    icon: gitlab
+    readme:
+      app-link: "https://gitlab.com"
+      current-maintainers: [*name]
   gmail:
     name: Gmail
     category: productivity
@@ -438,7 +448,7 @@ userstyles:
     name: paste.rs
     category: development
     icon: pastebin
-    color: peach 
+    color: peach
     readme:
       app-link: "https://paste.rs"
       current-maintainers: []
