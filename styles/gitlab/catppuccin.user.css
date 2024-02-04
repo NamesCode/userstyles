@@ -1,0 +1,222 @@
+/* ==UserStyle==
+@name Gitlab Catppuccin
+@namespace github.com/catppuccin/userstyles/styles/gitlab
+@homepageURL https://github.com/catppuccin/userstyles/tree/main/styles/gitlab
+@version 0.0.1
+//@updateURL https://github.com/catppuccin/userstyles/raw/main/styles/gitlab/catppuccin.user.css
+@updateURL https://github.com/catppuccin/userstyles/raw/main/styles/gitlab/catppuccin.user.css
+@supportURL https://github.com/catppuccin/userstyles/issues?q=is%3Aopen+is%3Aissue+label%3Agitlab
+@description Soothing pastel theme for Gitlab
+@author Catppuccin
+@license MIT
+
+@preprocessor less
+@var select lightFlavor "Light Flavor" ["latte:Latte*", "frappe:Frappé", "macchiato:Macchiato", "mocha:Mocha"]
+@var select darkFlavor "Dark Flavor" ["latte:Latte", "frappe:Frappé", "macchiato:Macchiato", "mocha:Mocha*"]
+@var select accentColor "Accent" ["rosewater:Rosewater", "flamingo:Flamingo", "pink:Pink", "mauve:Mauve", "red:Red", "maroon:Maroon", "peach:Peach", "yellow:Yellow", "green:Green", "teal:Teal", "blue:Blue", "sapphire:Sapphire*", "sky:Sky", "lavender:Lavender", "subtext0:Gray"]
+==/UserStyle== */
+/* If you need any help with the information above, please see: https://github.com/openstyles/stylus/wiki/Writing-UserCSS#var */
+
+/* For help with URL rules, please see https://github.com/openstyles/stylus/wiki/Writing-styles#valid--moz-document-rules. */
+@-moz-document domain('gitlab.com') {
+  @import (css) url("https://unpkg.com/@catppuccin/highlightjs@0.1.4/css/catppuccin.variables.css");
+
+  // Shamelessly stolen from our chatGPT port (https://github.com/catppuccin/userstyles/blob/9d87d35776a7727a23f21330ecce0d2ac445a1af/styles/chatgpt/catppuccin.user.css)
+  @color: white;
+  #rgbify(@color) {
+    @rgb-raw: red(@color), green(@color), blue(@color);
+  }
+
+  /* prettier-ignore */
+  @catppuccin: {
+    @latte:     { @rosewater: #dc8a78; @flamingo: #dd7878; @pink: #ea76cb; @mauve: #8839ef; @red: #d20f39; @maroon: #e64553; @peach: #fe640b; @yellow: #df8e1d; @green: #40a02b; @teal: #179299; @sky: #04a5e5; @sapphire: #209fb5; @blue: #1e66f5; @lavender: #7287fd; @text: #4c4f69; @subtext1: #5c5f77; @subtext0: #6c6f85; @overlay2: #7c7f93; @overlay1: #8c8fa1; @overlay0: #9ca0b0; @surface2: #acb0be; @surface1: #bcc0cc; @surface0: #ccd0da; @base: #eff1f5; @mantle: #e6e9ef; @crust: #dce0e8; };
+    @frappe:    { @rosewater: #f2d5cf; @flamingo: #eebebe; @pink: #f4b8e4; @mauve: #ca9ee6; @red: #e78284; @maroon: #ea999c; @peach: #ef9f76; @yellow: #e5c890; @green: #a6d189; @teal: #81c8be; @sky: #99d1db; @sapphire: #85c1dc; @blue: #8caaee; @lavender: #babbf1; @text: #c6d0f5; @subtext1: #b5bfe2; @subtext0: #a5adce; @overlay2: #949cbb; @overlay1: #838ba7; @overlay0: #737994; @surface2: #626880; @surface1: #51576d; @surface0: #414559; @base: #303446; @mantle: #292c3c; @crust: #232634; };
+    @macchiato: { @rosewater: #f4dbd6; @flamingo: #f0c6c6; @pink: #f5bde6; @mauve: #c6a0f6; @red: #ed8796; @maroon: #ee99a0; @peach: #f5a97f; @yellow: #eed49f; @green: #a6da95; @teal: #8bd5ca; @sky: #91d7e3; @sapphire: #7dc4e4; @blue: #8aadf4; @lavender: #b7bdf8; @text: #cad3f5; @subtext1: #b8c0e0; @subtext0: #a5adcb; @overlay2: #939ab7; @overlay1: #8087a2; @overlay0: #6e738d; @surface2: #5b6078; @surface1: #494d64; @surface0: #363a4f; @base: #24273a; @mantle: #1e2030; @crust: #181926; };
+    @mocha:     { @rosewater: #f5e0dc; @flamingo: #f2cdcd; @pink: #f5c2e7; @mauve: #cba6f7; @red: #f38ba8; @maroon: #eba0ac; @peach: #fab387; @yellow: #f9e2af; @green: #a6e3a1; @teal: #94e2d5; @sky: #89dceb; @sapphire: #74c7ec; @blue: #89b4fa; @lavender: #b4befe; @text: #cdd6f4; @subtext1: #bac2de; @subtext0: #a6adc8; @overlay2: #9399b2; @overlay1: #7f849c; @overlay0: #6c7086; @surface2: #585b70; @surface1: #45475a; @surface0: #313244; @base: #1e1e2e; @mantle: #181825; @crust: #11111b; };
+  }
+
+  #catppuccin(@lookup, @accent) {
+    @rosewater: @catppuccin[@@lookup][@rosewater];
+    @flamingo: @catppuccin[@@lookup][@flamingo];
+    @pink: @catppuccin[@@lookup][@pink];
+    @mauve: @catppuccin[@@lookup][@mauve];
+    @red: @catppuccin[@@lookup][@red];
+    @maroon: @catppuccin[@@lookup][@maroon];
+    @peach: @catppuccin[@@lookup][@peach];
+    @yellow: @catppuccin[@@lookup][@yellow];
+    @green: @catppuccin[@@lookup][@green];
+    @teal: @catppuccin[@@lookup][@teal];
+    @sky: @catppuccin[@@lookup][@sky];
+    @sapphire: @catppuccin[@@lookup][@sapphire];
+    @blue: @catppuccin[@@lookup][@blue];
+    @lavender: @catppuccin[@@lookup][@lavender];
+    @text: @catppuccin[@@lookup][@text];
+    @subtext1: @catppuccin[@@lookup][@subtext1];
+    @subtext0: @catppuccin[@@lookup][@subtext0];
+    @overlay2: @catppuccin[@@lookup][@overlay2];
+    @overlay1: @catppuccin[@@lookup][@overlay1];
+    @overlay0: @catppuccin[@@lookup][@overlay0];
+    @surface2: @catppuccin[@@lookup][@surface2];
+    @surface1: @catppuccin[@@lookup][@surface1];
+    @surface0: @catppuccin[@@lookup][@surface0];
+    @base: @catppuccin[@@lookup][@base];
+    @mantle: @catppuccin[@@lookup][@mantle];
+    @crust: @catppuccin[@@lookup][@crust];
+    @accent-color: @catppuccin[@@lookup][@@accent];
+
+    // Start styling your website here:
+
+    /*  If you need to specify an overwrite specific to a Flavor
+    *  like Latte, you can use a `when` guard clause. */
+    & when (@lookup = latte) {
+      /* your code for latte */
+    }
+
+    /*  You can also negate the statement above by using
+    *  a `when not` guard clause. */
+    & when not (@lookup = latte) {
+      /* your code for frappe, macchiato and mocha */
+    }
+
+    --blue: @blue;
+    --indigo: @lavender;
+    --purple: @mauve;
+    --pink: @pink;
+    --red: @red;
+    --orange: @peach;
+    --yellow: @yellow;
+    --green: @green;
+    --teal: @teal;
+    --cyan: @sky;
+    --white: @crust;
+    --gray: @overlay2;
+    --gray-dark: @subtext1;
+    --primary: @accent-color;
+    --secondary: #ececef;
+    --success: #108548;
+    --info: #1f75cb;
+    --warning: #ab6100;
+    --danger: #dd2b0e;
+    --light: @base;
+    --dark: #434248;
+
+    --default-diff-color-deletion: @red;
+    --default-diff-color-addition: @green;
+
+    --ctp-rosewater: #rgbify(@rosewater) [];
+    --ctp-flamingo: #rgbify(@flamingo) [];
+    --ctp-pink: #rgbify(@pink) [];
+    --ctp-mauve: #rgbify(@mauve) [];
+    --ctp-red: #rgbify(@red) [];
+    --ctp-maroon: #rgbify(@maroon) [];
+    --ctp-peach: #rgbify(@peach) [];
+    --ctp-yellow: #rgbify(@yellow) [];
+    --ctp-green: #rgbify(@green) [];
+    --ctp-teal: #rgbify(@teal) [];
+    --ctp-sky: #rgbify(@sky) [];
+    --ctp-sapphire: #rgbify(@sapphire) [];
+    --ctp-blue: #rgbify(@blue) [];
+    --ctp-lavender: #rgbify(@lavender) [];
+    --ctp-text: #rgbify(@text) [];
+    --ctp-subtext1: #rgbify(@subtext1) [];
+    --ctp-subtext0: #rgbify(@subtext0) [];
+    --ctp-overlay2: #rgbify(@overlay2) [];
+    --ctp-overlay1: #rgbify(@overlay1) [];
+    --ctp-overlay0: #rgbify(@overlay0) [];
+    --ctp-surface2: #rgbify(@surface2) [];
+    --ctp-surface1: #rgbify(@surface1) [];
+    --ctp-surface0: #rgbify(@surface0) [];
+    --ctp-base: #rgbify(@crust) [];
+    --ctp-mantle: #rgbify(@mantle) [];
+    --ctp-crust: #rgbify(@crust) [];
+
+    --color-hljs-comment: @surface2;
+    --color-hljs-variable: @mauve;
+    --color-hljs-link: @sapphire;
+    --color-hljs-meta: @peach;
+    --color-hljs-keyword: @mauve;
+    --color-hljs-type: @yellow;
+    --color-hljs-attr: @blue;
+    --color-hljs-builtin: @red;
+    --color-hljs-title: @blue;
+    --color-hljs-class: @yellow;
+    --color-hljs-function: @blue;
+    --color-hljs-tag: @flamingo;
+    --color-hljs-number: @peach;
+    --color-hljs-subst: @subtext0;
+    --color-hljs-string: @green;
+    --color-hljs-symbol: @flamingo;
+    --color-hljs-operator: @teal;
+    --color-hljs-punctuation: @subtext1;
+    --color-hljs-regexp: @pink;
+    --color-hljs-constant: @peach;
+    --color-hljs-literal: @peach;
+    --color-hljs-language: @mauve;
+    --color-hljs-params: @text;
+    --color-hljs-selector-doctag: @red;
+    --color-hljs-selector-tag: @yellow;
+    --color-hljs-selector-class: @teal;
+    --color-hljs-selector-id: @blue;
+    --color-hljs-selector-attr: @mauve;
+    --color-hljs-selector-pseudo: @teal;
+
+    //* {
+    //  background-color: @red;
+    //}
+
+    .gl-button.gl-button.btn-confirm, .gl-button.gl-button.btn-info, .gl-button.gl-button.btn-block.btn-confirm, .gl-button.gl-button.btn-block.btn-info {
+      background-color: @blue;
+      box-shadow: inset 0 0 0 1px mix(@blue, @text);
+    }
+
+     .code.white .line_holder .line_content.old, .code.white .line_holder .line_content.old-nomappinginraw, .code.white .line_holder .diff-line-num.old, .code.white .line_holder .diff-line-num.old-nomappinginraw {
+      background-color: fadeout(@red, 65%);
+    }
+    .code.white .line_holder .line_content.new, .code.white .line_holder .line_content.new-nomappinginraw, .code.white .line_holder .diff-line-num.new, .code.white .line_holder .diff-line-num.new-nomappinginraw {
+      background-color: fadeout(@green, 65%);
+    }
+
+    input {
+      color: @accent-color;
+    }
+
+    //.code.white {
+    //  .nt { // New tag
+    //    color:
+    //  }
+    //  .na {
+    //    color:
+    //  }
+    //  .s { // String
+    //    color:
+    //  }
+    //}
+  }
+
+  /* This section applies the light/dark themes automatically based on the user's system theme.
+     Uncomment this *only* if the website you are theming doesn't have a light/dark mode toggle.
+     For an actual example of this, see https://github.com/catppuccin/userstyles/blob/39288b593278e5efa48007d5fc001292cf910672/styles/brave-search/catppuccin.user.css#L16-L29. */
+  @media (prefers-color-scheme: light) {
+    :root {
+      #catppuccin(@lightFlavor, @accentColor);
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      #catppuccin(@darkFlavor, @accentColor);
+    }
+  }
+
+  /* If the website you are theming *does* have a light/dark mode toggle,
+     you can conditionally enable light/dark flavors by targeting whatever attribute that website uses to indicate the theme.
+     Un-comment this block if that is the case.
+      For an actual example of this, see https://github.com/catppuccin/userstyles/blob/39288b593278e5efa48007d5fc001292cf910672/styles/youtube/catppuccin.user.css#L21-L30.
+  :root[data-theme="dark"] {
+    #catppuccin(@darkFlavor, @accentColor);
+  }
+  :root[data-theme="light"] {
+    #catppuccin(@lightFlavor, @accentColor);
+  }
+  */
+}
+// vim:ft=less
