@@ -19,14 +19,6 @@
 
 /* For help with URL rules, please see https://github.com/openstyles/stylus/wiki/Writing-styles#valid--moz-document-rules. */
 @-moz-document domain('gitlab.com') {
-  @import (css) url("https://unpkg.com/@catppuccin/highlightjs@0.1.4/css/catppuccin.variables.css");
-
-  // Shamelessly stolen from our chatGPT port (https://github.com/catppuccin/userstyles/blob/9d87d35776a7727a23f21330ecce0d2ac445a1af/styles/chatgpt/catppuccin.user.css)
-  @color: white;
-  #rgbify(@color) {
-    @rgb-raw: red(@color), green(@color), blue(@color);
-  }
-
   /* prettier-ignore */
   @catppuccin: {
     @latte:     { @rosewater: #dc8a78; @flamingo: #dd7878; @pink: #ea76cb; @mauve: #8839ef; @red: #d20f39; @maroon: #e64553; @peach: #fe640b; @yellow: #df8e1d; @green: #40a02b; @teal: #179299; @sky: #04a5e5; @sapphire: #209fb5; @blue: #1e66f5; @lavender: #7287fd; @text: #4c4f69; @subtext1: #5c5f77; @subtext0: #6c6f85; @overlay2: #7c7f93; @overlay1: #8c8fa1; @overlay0: #9ca0b0; @surface2: #acb0be; @surface1: #bcc0cc; @surface0: #ccd0da; @base: #eff1f5; @mantle: #e6e9ef; @crust: #dce0e8; };
@@ -66,6 +58,21 @@
 
     // Start styling your website here:
 
+    // Apply to everything
+    &, * {
+      scrollbar-color: @accent-color @mantle;
+      ::-webkit-scrollbar-track {
+        background: @surface1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: @accent-color;
+      }
+
+      ::selection {
+        background: fadeout(@accent-color, 80%);
+      }
+    }
+
     /*  If you need to specify an overwrite specific to a Flavor
     *  like Latte, you can use a `when` guard clause. */
     & when (@lookup = latte) {
@@ -100,35 +107,10 @@
     --light: @base;
     --dark: #434248;
 
-    --default-diff-color-deletion: @red;
-    --default-diff-color-addition: @green;
-
-    --ctp-rosewater: #rgbify(@rosewater) [];
-    --ctp-flamingo: #rgbify(@flamingo) [];
-    --ctp-pink: #rgbify(@pink) [];
-    --ctp-mauve: #rgbify(@mauve) [];
-    --ctp-red: #rgbify(@red) [];
-    --ctp-maroon: #rgbify(@maroon) [];
-    --ctp-peach: #rgbify(@peach) [];
-    --ctp-yellow: #rgbify(@yellow) [];
-    --ctp-green: #rgbify(@green) [];
-    --ctp-teal: #rgbify(@teal) [];
-    --ctp-sky: #rgbify(@sky) [];
-    --ctp-sapphire: #rgbify(@sapphire) [];
-    --ctp-blue: #rgbify(@blue) [];
-    --ctp-lavender: #rgbify(@lavender) [];
-    --ctp-text: #rgbify(@text) [];
-    --ctp-subtext1: #rgbify(@subtext1) [];
-    --ctp-subtext0: #rgbify(@subtext0) [];
-    --ctp-overlay2: #rgbify(@overlay2) [];
-    --ctp-overlay1: #rgbify(@overlay1) [];
-    --ctp-overlay0: #rgbify(@overlay0) [];
-    --ctp-surface2: #rgbify(@surface2) [];
-    --ctp-surface1: #rgbify(@surface1) [];
-    --ctp-surface0: #rgbify(@surface0) [];
-    --ctp-base: #rgbify(@crust) [];
-    --ctp-mantle: #rgbify(@mantle) [];
-    --ctp-crust: #rgbify(@crust) [];
+    --default-diff-color-deletion: fadeout(@red, 65%);
+    --default-diff-color-addition: fadeout(@green, 65%);
+    --diff-deletion-color: var(--default-diff-color-deletion);
+    --diff-addition-color: var(--default-diff-color-addition);
 
     --color-hljs-comment: @surface2;
     --color-hljs-variable: @mauve;
@@ -160,20 +142,52 @@
     --color-hljs-selector-attr: @mauve;
     --color-hljs-selector-pseudo: @teal;
 
-    //* {
-    //  background-color: @red;
-    //}
-
-    .gl-button.gl-button.btn-confirm, .gl-button.gl-button.btn-info, .gl-button.gl-button.btn-block.btn-confirm, .gl-button.gl-button.btn-block.btn-info {
-      background-color: @blue;
-      box-shadow: inset 0 0 0 1px mix(@blue, @text);
+    .hljs-title { // Apply syntax highlighting to the buggers that dodged it
+      &\.class {
+        color: var(--color-hljs-class) !important;
+      }
+      &\.function {
+        color: var(--color-hljs-function) !important;
+      }
     }
 
-     .code.white .line_holder .line_content.old, .code.white .line_holder .line_content.old-nomappinginraw, .code.white .line_holder .diff-line-num.old, .code.white .line_holder .diff-line-num.old-nomappinginraw {
-      background-color: fadeout(@red, 65%);
+    .code {
+      & .old {
+        background-color: fadeout(@red, 65%);
+        ::before {
+          color: @red !important;
+        }
+      }
+      & .new {
+        background-color: fadeout(@green, 65%);
+        ::before {
+          color: @green !important;
+        }
+      }
+      & .hll { // Highlighted line
+        background-color: fadeout(@surface2, 60%) !important;
+      }
+      & pre.code, & .diff-line-num, & .line-numbers, & .line_holder, & .line_holder .line_content { // Editor background
+        background-color: @base !important;
+        color: @text !important;
+        border-color: @subtext0 !important;
+
+        a { // Line num
+          color: var(--color-hljs-comment);
+        }
+
+        .match { // Git diff header
+          background-color: @overlay0;
+        }
+      }
+      & .file-line-blame::before { // Git icon
+        background-color: var(--color-hljs-comment);
+      }
     }
-    .code.white .line_holder .line_content.new, .code.white .line_holder .line_content.new-nomappinginraw, .code.white .line_holder .diff-line-num.new, .code.white .line_holder .diff-line-num.new-nomappinginraw {
-      background-color: fadeout(@green, 65%);
+
+    .file-title-flex-parent, .file-holder .file-title-flex-parent {
+      background-color: #9864ff;
+      border-bottom: 1px solid #f00000;
     }
 
     input {
